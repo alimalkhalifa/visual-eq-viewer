@@ -70,6 +70,25 @@ class VisualEQZone extends React.Component {
     loader.load(`${this.props.store}/${zone}/${zone}.glb`, gltf => {
       this.subject = gltf.scene
       this.scene.add(this.subject)
+      let objectLocations = this.subject.userData.objectLocations
+      loader.load(`${this.props.store}/${zone}/${zone}_obj.glb`, objectsGltf => {
+        let objects = objectsGltf.scene.children
+        for (let o of objectLocations) {
+          let object = null
+          for (let ob of objects) {
+            if (ob.name === o.name) {
+              object = ob
+            }
+          }
+          if (object) {
+            let newObj = object.clone()
+            newObj.position.fromArray(o.position)
+            newObj.rotation.setFromVector3(new THREE.Vector3().fromArray(o.rot), 'YXZ')
+            newObj.scale.fromArray(o.scale)
+            this.subject.add(newObj)
+          }
+        }
+      })
     })
   }
   componentDidUpdate() {
