@@ -11,6 +11,7 @@ const VisualEQNavBar = function VisualEQNavBarFunction() {
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/npc">NPCs</Nav.Link>
           <Nav.Link as={Link} to="/item">Items</Nav.Link>
+          <Nav.Link as={Link} to="/zone">Zones</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

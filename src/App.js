@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import VisualEQNavBar from './components/VisualEQNavBar'
 import VisualEQNPCViewer from './components/VisualEQNPCViewer'
 import VisualEQItemViewer from './components/VisualEQItemViewer'
+import VisualEQZoneViewer from './components/VisualEQZoneViewer'
 import './App.css';
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
         <Switch>
           <Route path="/item">
             <VisualEQItemViewer store={`${store}/items`}/>
+          </Route>
+          <Route path="/zone">
+            <VisualEQZoneViewer store={`${store}`}/>
           </Route>
           <Route path="/">
             <VisualEQNPCViewer store={`${store}/characters`}/>

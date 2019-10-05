@@ -57,7 +57,6 @@ class VisualItemViewer extends React.Component {
   }
   getModels() {
     fetch(`${this.props.store}/items.json`).then(res => res.json()).then(body => {
-      console.log(body)
       this.setState({ items: body.items })
     }).catch(err => {
       throw new Error(err)
