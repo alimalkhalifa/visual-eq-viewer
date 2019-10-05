@@ -51,9 +51,7 @@ class VisualEQModelViewer extends React.Component {
     }
   }
   loadModel(race) {
-    console.log(this.props.modelSpecs)
     let loader = new GLTFLoader()
-    console.log(`${this.props.store}/${race}.glb`)
     loader.load(`${this.props.store}/${race}.glb`, gltf => {
       this.subject = gltf.scene
       let baseName = gltf.scene.children[0].name

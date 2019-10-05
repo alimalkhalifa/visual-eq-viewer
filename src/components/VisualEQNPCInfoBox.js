@@ -10,7 +10,7 @@ class VisualEQNPCInfoBox extends React.Component {
         overflow: 'auto',
         padding: 30
       }}>
-        <h5 className="monospace mb-3">Visual EQ NpcViewer</h5>
+        <h5 className="monospace mb-3">NPC</h5>
         <form>
           <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
             <option value="select" disabled>Select race</option>

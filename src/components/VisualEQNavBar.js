@@ -10,7 +10,7 @@ const VisualEQNavBar = function VisualEQNavBarFunction() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/npc">NPCs</Nav.Link>
-          <Nav.Link as={Link} to="/item">Item</Nav.Link>
+          <Nav.Link as={Link} to="/item">Items</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

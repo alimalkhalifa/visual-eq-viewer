@@ -15,8 +15,7 @@ class VisualNPCViewer extends React.Component {
       body: 0,
       distance: 10
     }
-    this.getModels()
-    this.getModelSpecs('ORC')
+    this.getModels = this.getModels.bind(this)
     this.changeRace = this.changeRace.bind(this)
     this.changeTexture = this.changeTexture.bind(this)
     this.changeHelm = this.changeHelm.bind(this)
@@ -47,6 +46,10 @@ class VisualNPCViewer extends React.Component {
         />
       </div>
     )
+  }
+  componentDidMount() {
+    this.getModels()
+    this.getModelSpecs(this.state.race)
   }
   changeRace(event) {
     this.setState({ 
@@ -99,7 +102,6 @@ class VisualNPCViewer extends React.Component {
   }
   getModels() {
     fetch(`${this.props.store}/races.json`).then(res => res.json()).then(body => {
-      console.log(body)
       this.setState({ races: body.races })
     }).catch(err => {
       throw new Error(err)
