@@ -10,6 +10,7 @@ class VisualEQZone extends React.Component {
       locOffsetTop: 10,
     }
     this.timeUpdate = 0
+    this.destroyed = false
   }
   render() {
     return (
@@ -52,6 +53,7 @@ class VisualEQZone extends React.Component {
     this.connect()
   }
   destroy(alsoRenderer) {
+    this.destroyed = true
     this.scene.dispose()
     if (alsoRenderer) {
       this.renderer.forceContextLoss()
@@ -74,6 +76,7 @@ class VisualEQZone extends React.Component {
     if (this.props.store && this.props.zone) this.loadZone(this.props.zone)
   }
   animate() {
+    if (this.destroyed) return
     requestAnimationFrame(() => this.animate())
     this.cullScene()
     let delta = this.clock.getDelta()
