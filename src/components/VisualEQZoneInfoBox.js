@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, ButtonGroup } from 'react-bootstrap'
 
 class VisualEQZoneInfoBox extends React.Component {
   render() {
@@ -28,6 +29,10 @@ class VisualEQZoneInfoBox extends React.Component {
           * Hold right click to move camera<br />
           * Hold shift to double speed
         </p>
+        <ButtonGroup aria-label="Export Buttons">
+          <Button variant="primary" onClick={() => this.props.exportModel('gltf', 'basic')}>Export glTF (Basic)</Button>
+          <Button variant="primary" onClick={() => this.props.exportModel('gltf', 'principled')}>Export glTF (Principled)</Button>
+        </ButtonGroup>
       </div>
     )
   }

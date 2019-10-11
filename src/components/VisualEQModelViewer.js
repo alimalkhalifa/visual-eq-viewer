@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import path from 'path'
 
-class VisualEQModelViewer extends React.Component {
+class VisualEQModelViewer extends React.PureComponent {
   render() {
     return (
       <div ref={ref => (this.mount = ref)} style={{
@@ -54,6 +54,7 @@ class VisualEQModelViewer extends React.Component {
     let loader = new GLTFLoader()
     loader.load(`${this.props.store}/${race}.glb`, gltf => {
       this.subject = gltf.scene
+      this.props.setSubject(gltf.scene)
       let baseName = gltf.scene.children[0].name
       gltf.scene.traverse(mesh => {
         let type = 0
@@ -89,7 +90,6 @@ class VisualEQModelViewer extends React.Component {
           let url = src.substr(0, src.indexOf(base))
           let newbase
           if (name.indexOf('HE', 3) !== -1 && base.indexOf(this.props.race.toLowerCase()) !== -1) {
-            console.log(base)
             if (this.props.imageSpecs[base].maxTexture < texture) texture = String(this.props.imageSpecs[base].maxTexture)
             texture = String(texture)
             while (texture.length < 2) {
@@ -118,7 +118,7 @@ class VisualEQModelViewer extends React.Component {
           mesh.material.map.image.src = url
         }
       })
-      this.scene.add(this.subject)
+      this.scene.add(gltf.scene)
     })
   }
   componentDidUpdate() {

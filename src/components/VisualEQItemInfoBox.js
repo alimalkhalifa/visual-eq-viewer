@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, ButtonGroup } from 'react-bootstrap'
 
 class VisualEQItemInfoBox extends React.Component {
   render() {
@@ -25,6 +26,10 @@ class VisualEQItemInfoBox extends React.Component {
             <input type="number" className="form-control" value={this.props.distance} onChange={this.props.changeDistance} />
           </div>
         </form>
+        <ButtonGroup aria-label="Export Buttons">
+          <Button variant="primary" onClick={() => this.props.exportModel('gltf', 'basic')}>Export glTF (Basic)</Button>
+          <Button variant="primary" onClick={() => this.props.exportModel('gltf', 'principled')}>Export glTF (Principled)</Button>
+        </ButtonGroup>
       </div>
     )
   }

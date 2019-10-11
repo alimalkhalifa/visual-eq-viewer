@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import FlyCamera from './FlyCamera'
 
-class VisualEQZone extends React.Component {
+class VisualEQZone extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -69,6 +69,7 @@ class VisualEQZone extends React.Component {
     let loader = new GLTFLoader()
     loader.load(`${this.props.store}/${zone}/${zone}.glb`, gltf => {
       this.subject = gltf.scene
+      this.props.setSubject(gltf.scene)
       this.scene.add(this.subject)
       let objectLocations = this.subject.userData.objectLocations
       loader.load(`${this.props.store}/${zone}/${zone}_obj.glb`, objectsGltf => {

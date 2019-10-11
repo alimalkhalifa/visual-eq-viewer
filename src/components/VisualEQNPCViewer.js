@@ -1,6 +1,23 @@
 import React from 'react'
 import VisualEQModelViewer from './VisualEQModelViewer'
 import VisualEQInfoBox from './VisualEQNPCInfoBox'
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
+import { MeshStandardMaterial } from 'three';
+
+var saveData = (function () {
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  return function (data, fileName) {
+      var json = JSON.stringify(data),
+          blob = new Blob([json], {type: "octet/stream"}),
+          url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(url);
+  };
+}());
 
 class VisualNPCViewer extends React.Component {
   constructor(props) {
@@ -8,6 +25,7 @@ class VisualNPCViewer extends React.Component {
     this.state = {
       races: ['ORC'],
       race: 'ORC',
+      subject: null,
       modelSpecs: {},
       texture: 0,
       helm: 0,
@@ -22,6 +40,8 @@ class VisualNPCViewer extends React.Component {
     this.changeFace = this.changeFace.bind(this)
     this.changeBody = this.changeBody.bind(this)
     this.changeDistance = this.changeDistance.bind(this)
+    this.setSubject = this.setSubject.bind(this)
+    this.exportModel = this.exportModel.bind(this)
   }
   render() {
     return (
@@ -31,7 +51,11 @@ class VisualNPCViewer extends React.Component {
         height: '100%',
         width: '100%'
       }}>
-        <VisualEQModelViewer race={this.state.race} helm={this.state.helm} texture={this.state.texture} face={this.state.face} modelSpecs={this.state.modelSpecs} distance={this.state.distance} store={this.props.store} imageSpecs={this.state.modelSpecs.imageSpecs} />
+        <VisualEQModelViewer race={this.state.race} helm={this.state.helm} texture={this.state.texture}
+          face={this.state.face} modelSpecs={this.state.modelSpecs} distance={this.state.distance}
+          store={this.props.store} imageSpecs={this.state.modelSpecs.imageSpecs}
+          setSubject={this.setSubject}
+        />
         <VisualEQInfoBox changeRace={this.changeRace}
           changeTexture={this.changeTexture}
           changeHelm={this.changeHelm}
@@ -43,6 +67,7 @@ class VisualNPCViewer extends React.Component {
           texture={this.state.texture} face={this.state.face}
           body={this.state.body} distance={this.state.distance}
           modelSpecs={this.state.modelSpecs}
+          exportModel={this.exportModel}
         />
       </div>
     )
@@ -105,6 +130,37 @@ class VisualNPCViewer extends React.Component {
       this.setState({ races: body.races })
     }).catch(err => {
       throw new Error(err)
+    })
+  }
+  setSubject(subject) {
+    this.setState({subject})
+  }
+  exportModel(type = "gltf", shader = "basic") {
+    let model = this.state.subject.clone()
+    model.rotation.set(0, 0, 0)
+    if (type === "gltf") {
+      this.exportGlTF(model, shader)
+    }
+    if (type === "obj") {
+      this.exportOBJ(model)
+    }
+  }
+  exportGlTF(model, shader) {
+    if (shader === "principled") {
+      model.traverse(child => {
+        if (child.material) {
+          child.material = new MeshStandardMaterial({
+            map: child.material.map
+          })
+        }
+      })
+    }
+    let exporter = new GLTFExporter()
+    exporter.parse(model, gltf => {
+      saveData(gltf, `${this.state.race}.gltf`)
+    }, {
+      embedImages: true,
+      onlyVisible: true
     })
   }
 }
