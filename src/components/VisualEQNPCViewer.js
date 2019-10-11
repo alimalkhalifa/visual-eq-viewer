@@ -137,13 +137,29 @@ class VisualNPCViewer extends React.Component {
   }
   exportModel(type = "gltf", shader = "basic") {
     let model = this.state.subject.clone()
-    model.rotation.set(0, 0, 0)
-    if (type === "gltf") {
-      this.exportGlTF(model, shader)
+    let child = null
+    for (let c of model.children) {
+      child = c
     }
-    if (type === "obj") {
-      this.exportOBJ(model)
+    let base = null
+    for (let c of child.children) {
+      let searchString = this.state.race + '_'
+      if (c.name.indexOf(searchString) !== -1) {
+        base = c
+      }
     }
+    let list = []
+    if (base) {
+      for (let c of child.children) {
+        if (c !== base) list.push(c)
+      }
+    }
+    for (let c of list) {
+      c.parent.remove(c)
+      base.add(c)
+    }
+    base.rotateX(-Math.PI/2)
+    this.exportGlTF(base, shader)
   }
   exportGlTF(model, shader) {
     if (shader === "principled") {
@@ -160,7 +176,7 @@ class VisualNPCViewer extends React.Component {
       saveData(gltf, `${this.state.race}.gltf`)
     }, {
       embedImages: true,
-      onlyVisible: true
+      onlyVisible: true,
     })
   }
 }

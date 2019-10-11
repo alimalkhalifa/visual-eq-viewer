@@ -90,12 +90,13 @@ class VisualItemViewer extends React.Component {
   }
   exportModel(type = "gltf", shader = "basic") {
     let model = this.state.subject.clone()
-    model.rotation.set(0, 0, 0)
-    if (type === "gltf") {
-      this.exportGlTF(model, shader)
+    let child = null
+    for (let c of model.children) {
+      child = c
     }
-    if (type === "obj") {
-      this.exportOBJ(model)
+    child.rotateX(-Math.PI/2)
+    if (type === "gltf") {
+      this.exportGlTF(child, shader)
     }
   }
   exportGlTF(model, shader) {

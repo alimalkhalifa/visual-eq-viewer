@@ -72,12 +72,11 @@ class VisualZoneViewer extends React.Component {
   }
   exportModel(type = "gltf", shader = "basic") {
     let model = this.state.subject.clone()
-    model.rotation.set(0, 0, 0)
+    for (let child of model.children) {
+      child.rotateX(-Math.PI/2)
+    }
     if (type === "gltf") {
       this.exportGlTF(model, shader)
-    }
-    if (type === "obj") {
-      this.exportOBJ(model)
     }
   }
   exportGlTF(model, shader) {
