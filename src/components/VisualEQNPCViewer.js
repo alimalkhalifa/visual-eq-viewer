@@ -27,6 +27,8 @@ class VisualNPCViewer extends React.Component {
       race: 'ORC',
       subject: null,
       modelSpecs: {},
+      anim: "",
+      animList: [],
       texture: 0,
       helm: 0,
       face: 0,
@@ -42,6 +44,8 @@ class VisualNPCViewer extends React.Component {
     this.changeDistance = this.changeDistance.bind(this)
     this.setSubject = this.setSubject.bind(this)
     this.exportModel = this.exportModel.bind(this)
+    this.setAnimList = this.setAnimList.bind(this)
+    this.changeAnim = this.changeAnim.bind(this)
   }
   render() {
     return (
@@ -55,6 +59,7 @@ class VisualNPCViewer extends React.Component {
           face={this.state.face} modelSpecs={this.state.modelSpecs} distance={this.state.distance}
           store={this.props.store} imageSpecs={this.state.modelSpecs.imageSpecs}
           setSubject={this.setSubject}
+          setAnimList={this.setAnimList}
         />
         <VisualEQInfoBox changeRace={this.changeRace}
           changeTexture={this.changeTexture}
@@ -68,6 +73,9 @@ class VisualNPCViewer extends React.Component {
           body={this.state.body} distance={this.state.distance}
           modelSpecs={this.state.modelSpecs}
           exportModel={this.exportModel}
+          animList={this.state.animList}
+          changeAnim={this.changeAnim}
+          anim={this.state.anim}
         />
       </div>
     )
@@ -81,7 +89,8 @@ class VisualNPCViewer extends React.Component {
       race: event.target.value,
       texture: 0,
       face: 0,
-      helm: 0
+      helm: 0,
+      anim: ""
     })
     this.getModelSpecs(event.target.value)
   }
@@ -178,6 +187,13 @@ class VisualNPCViewer extends React.Component {
       embedImages: true,
       onlyVisible: true,
     })
+  }
+  setAnimList(animList) {
+    this.setState({animList})
+  }
+  changeAnim(event) {
+    let anim = event.target.value
+    this.setState({ anim })
   }
 }
 

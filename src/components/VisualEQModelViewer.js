@@ -55,6 +55,7 @@ class VisualEQModelViewer extends React.PureComponent {
     loader.load(`${this.props.store}/${race}.glb`, gltf => {
       this.subject = gltf.scene
       this.props.setSubject(gltf.scene)
+      if (gltf.scene.children[0].userData.animations) this.props.setAnimList(gltf.scene.children[0].userData.animations)
       let baseName = gltf.scene.children[0].name
       gltf.scene.traverse(mesh => {
         let type = 0

@@ -1,5 +1,20 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import RaceCodes from '../constants/raceCodeConstants.json'
+
+function getRaceName(code) {
+  for (let raceNum in RaceCodes) {
+    let name = RaceCodes[raceNum].raceName
+    if (RaceCodes[raceNum].male === code) {
+      return `${name} (Male)`
+    } else if (RaceCodes[raceNum].female === code) {
+      return `${name} (Female)`
+    } else if (RaceCodes[raceNum].neutral === code) {
+      return `${name}`
+    }
+  }
+  return "Unknown"
+}
 
 class VisualEQNPCInfoBox extends React.Component {
   render() {
@@ -18,6 +33,14 @@ class VisualEQNPCInfoBox extends React.Component {
             {
               this.props.races.map(value => {
                 return <option key={value} value={value}>{value}</option>
+              })
+            }
+          </select>
+          <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
+            <option value="select" disabled>Select race</option>
+            {
+              this.props.races.map(value => {
+                return <option key={value} value={value}>{getRaceName(value)}</option>
               })
             }
           </select>
@@ -44,6 +67,17 @@ class VisualEQNPCInfoBox extends React.Component {
           <div className="form-group">
             <label>Camera Distance</label>
             <input type="number" className="form-control" value={this.props.distance} onChange={this.props.changeDistance} />
+          </div>
+          <div className="form-group">
+            <label>Animation</label>
+            <select value={this.props.anim} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeAnim}>
+              <option value="">No Animation</option>
+              {
+                this.props.animList.map(value => {
+                  return <option key={value} value={value}>{value}</option>
+                })
+              }
+            </select>
           </div>
         </form>
         <ButtonGroup aria-label="Export Buttons">
