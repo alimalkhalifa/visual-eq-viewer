@@ -23,7 +23,29 @@ function getRaceName(code) {
   return "Unknown"
 }
 
+function getRaceID(code) {
+  for (let raceNum in RaceCodes) {
+    if (RaceCodes[raceNum].male === code || RaceCodes[raceNum].female === code || RaceCodes[raceNum].neutral === code) {
+      return `${raceNum}`
+    }
+  }
+  return `-1`
+}
+
 class VisualEQNPCInfoBox extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      pickBy: 'by-clientID'
+    }
+  }
+
+  changePickBy(id) {
+    this.setState({
+      pickBy: id
+    })
+  }
+
   render() {
     return (
       <div id="info-box" style={{
@@ -35,22 +57,57 @@ class VisualEQNPCInfoBox extends React.Component {
       }}>
         <h5 className="monospace mb-3">NPC</h5>
         <form>
-          <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
-            <option value="select" disabled>Select race</option>
-            {
-              this.props.races.map(value => {
-                return <option key={value} value={value}>{value}</option>
-              })
-            }
-          </select>
-          <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
-            <option value="select" disabled>Select race</option>
-            {
-              this.props.races.map(value => {
-                return <option key={value} value={value}>{getRaceName(value)}</option>
-              })
-            }
-          </select>
+          <div style={{textAlign: 'left'}}>
+            <label>Select Race By:</label><br />
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="by-clientID" name="pickBy" value="by-clientID" checked={this.state.pickBy === "by-clientID"} onClick={() => this.changePickBy("by-clientID")} />
+              <label class="form-check-label" for="by-clientID">Client ID</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="by-serverID" name="pickBy" value="by-serverID" checked={this.state.pickBy === "by-serverID"} onClick={() => this.changePickBy("by-serverID")} />
+              <label class="form-check-label" for="by-serverID">Server ID</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="by-name" name="pickBy" value="by-name" checked={this.state.pickBy === "by-name"} onClick={() => this.changePickBy("by-name")} />
+              <label class="form-check-label" for="by-name">Name</label>
+            </div>
+          </div> <br />
+
+          { this.state.pickBy === "by-clientID" &&
+            <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
+              <option value="select" disabled>Select race</option>
+              {
+                this.props.races.map(value => {
+                  return <option key={value} value={value}>{`${value} | ${getRaceName(value)} | ${getRaceID(value)}`}</option>
+                })
+              }
+            </select>
+          }
+
+          { this.state.pickBy === "by-serverID" &&
+            <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
+              <option value="select" disabled>Select race</option>
+              {
+                this.props.races.map(value => {
+                  return <option key={value} value={value}>{`${getRaceID(value)} | ${value} | ${getRaceName(value)}`}</option>
+                })
+              }
+            </select>
+          }
+
+          { this.state.pickBy === "by-name" &&
+            <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
+              <option value="select" disabled>Select race</option>
+              {
+                this.props.races.map(value => {
+                  return <option key={value} value={value}>{`${getRaceName(value)} | ${value} | ${getRaceID(value)}`}</option>
+                })
+              }
+            </select>
+          }
+
           <div className="form-group">
             <label>Texture</label>
             <SliderwTooltip min={0} max={this.props.body > 0 ? this.props.modelSpecs.maxBodyTexture : this.props.modelSpecs.maxTexture} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.texture} onChange={this.props.changeTexture} />
