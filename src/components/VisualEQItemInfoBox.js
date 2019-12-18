@@ -1,5 +1,12 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import Slider from 'rc-slider'
+
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const SliderwTooltip = createSliderWithTooltip(Slider)
 
 class VisualEQItemInfoBox extends React.Component {
   render() {
@@ -23,7 +30,7 @@ class VisualEQItemInfoBox extends React.Component {
           </select>
           <div className="form-group">
             <label>Camera Distance</label>
-            <input type="number" className="form-control" value={this.props.distance} onChange={this.props.changeDistance} />
+            <SliderwTooltip min={5} max={50} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.distance} onChange={this.props.changeDistance} />
           </div>
         </form>
         <ButtonGroup aria-label="Export Buttons">

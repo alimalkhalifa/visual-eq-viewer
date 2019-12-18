@@ -68,8 +68,7 @@ class VisualItemViewer extends React.Component {
     })
     this.getModelSpecs(event.target.value)
   }
-  changeDistance(event) {
-    let distance = parseInt(event.target.value)
+  changeDistance(distance) {
     if (distance < 0) distance = 0
     this.setState({ distance })
   }

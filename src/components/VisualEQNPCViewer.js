@@ -94,8 +94,7 @@ class VisualNPCViewer extends React.Component {
     })
     this.getModelSpecs(event.target.value)
   }
-  changeTexture(event) {
-    let texture = parseInt(event.target.value)
+  changeTexture(texture) {
     if (this.state.body) {
       if (texture <  10) texture = 10
       if (texture > this.state.modelSpecs.maxBodyTexture) texture = this.state.modelSpecs.maxBodyTexture
@@ -105,27 +104,23 @@ class VisualNPCViewer extends React.Component {
     }
     this.setState({ texture })
   }
-  changeHelm(event) {
-    let helm = parseInt(event.target.value)
+  changeHelm(helm) {
     if (helm < 0) helm = 0
     if (helm > this.state.modelSpecs.maxHelm) helm = this.state.modelSpecs.maxHelm
     this.setState({ helm })
   }
-  changeFace(event) {
-    let face = parseInt(event.target.value)
+  changeFace(face) {
     if (face < 0) face = 0
     if (face > this.state.modelSpecs.maxFace) face = this.state.modelSpecs.maxFace
     this.setState({ face })
   }
-  changeBody(event) {
-    let body = parseInt(event.target.value)
+  changeBody(body) {
     if (body < 0) body = 0
     if (body > this.state.modelSpecs.maxBody) body = this.state.modelSpecs.maxBody
     let texture = body === 0 ? 0 : 10
     this.setState({ body, texture })
   }
-  changeDistance(event) {
-    let distance = parseInt(event.target.value)
+  changeDistance(distance) {
     if (distance < 0) distance = 0
     this.setState({ distance })
   }

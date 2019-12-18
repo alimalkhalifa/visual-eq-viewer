@@ -1,6 +1,13 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import Slider from 'rc-slider'
 import RaceCodes from '../constants/raceCodeConstants.json'
+
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const SliderwTooltip = createSliderWithTooltip(Slider)
 
 function getRaceName(code) {
   for (let raceNum in RaceCodes) {
@@ -46,27 +53,23 @@ class VisualEQNPCInfoBox extends React.Component {
           </select>
           <div className="form-group">
             <label>Texture</label>
-            <input type="number" className="form-control" value={this.props.texture} onChange={this.props.changeTexture} />
-            <small className="form-text text-muted">Maximum valid texture is {this.props.body > 0 ? this.props.modelSpecs.maxBodyTexture : this.props.modelSpecs.maxTexture}.</small>
+            <SliderwTooltip min={0} max={this.props.body > 0 ? this.props.modelSpecs.maxBodyTexture : this.props.modelSpecs.maxTexture} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.texture} onChange={this.props.changeTexture} />
           </div>
           <div className="form-group">
             <label>Face</label>
-            <input type="number" className="form-control" value={this.props.face} onChange={this.props.changeFace} />
-            <small className="form-text text-muted">Maximum valid face is {this.props.modelSpecs.maxFace}.</small>
+            <SliderwTooltip min={0} max={this.props.modelSpecs.maxFace} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.face} onChange={this.props.changeFace} />
           </div>
           <div className="form-group">
             <label>Helm</label>
-            <input type="number" className="form-control" value={this.props.helm} onChange={this.props.changeHelm} />
-            <small className="form-text text-muted">Maximum valid helm is {this.props.modelSpecs.maxHelm}.</small>
+            <SliderwTooltip min={0} max={this.props.modelSpecs.maxHelm} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.helm} onChange={this.props.changeHelm} />
           </div>
           <div className="form-group">
             <label>Body</label>
-            <input type="number" className="form-control" value={this.props.body} onChange={this.props.changeBody} />
-            <small className="form-text text-muted">Maximum valid body is {this.props.modelSpecs.maxBody}.</small>
+            <SliderwTooltip min={0} max={this.props.modelSpecs.maxBody} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.body} onChange={this.props.changeBody} />
           </div>
           <div className="form-group">
             <label>Camera Distance</label>
-            <input type="number" className="form-control" value={this.props.distance} onChange={this.props.changeDistance} />
+            <SliderwTooltip min={5} max={50} defaultValue={0} tipFormatter={value => `${value}`} value={this.props.distance} onChange={this.props.changeDistance} />
           </div>
           <div className="form-group">
             <label>Animation</label>
