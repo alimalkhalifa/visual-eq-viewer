@@ -32,6 +32,19 @@ function getRaceID(code) {
   return `-1`
 }
 
+function getGender(code) {
+  for (let raceNum in RaceCodes) {
+    if (RaceCodes[raceNum].male === code) {
+      return `0`
+    } else if (RaceCodes[raceNum].female === code) {
+      return `1`
+    } else if (RaceCodes[raceNum].neutral === code) {
+      return `2`
+    }
+  }
+  return "2"
+}
+
 class VisualEQNPCInfoBox extends React.Component {
   constructor(props) {
     super(props)
@@ -107,6 +120,13 @@ class VisualEQNPCInfoBox extends React.Component {
               }
             </select>
           }
+
+          <div style={{textAlign: 'left'}}>
+            Client ID: {this.props.race}<br />
+            Server ID: {getRaceID(this.props.race)}<br />
+            Race Name: {getRaceName(this.props.race)}<br />
+            Gender: {getGender(this.props.race)}
+          </div> <br />
 
           <div className="form-group">
             <label>Texture</label>
