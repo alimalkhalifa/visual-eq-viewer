@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "rm -rf build && yarn build && rm -rf /var/www/html/static && cp -r build/* /var/www/html/"
   },
   "eslintConfig": {
     "extends": "react-app"
