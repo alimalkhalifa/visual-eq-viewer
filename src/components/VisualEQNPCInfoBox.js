@@ -72,21 +72,13 @@ class VisualEQNPCInfoBox extends React.Component {
         <form>
           <div style={{textAlign: 'left'}}>
             <label>Select Race By:</label><br />
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="by-clientID" name="pickBy" value="by-clientID" checked={this.state.pickBy === "by-clientID"} onClick={() => this.changePickBy("by-clientID")} />
-              <label class="form-check-label" for="by-clientID">Client ID</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="by-serverID" name="pickBy" value="by-serverID" checked={this.state.pickBy === "by-serverID"} onClick={() => this.changePickBy("by-serverID")} />
-              <label class="form-check-label" for="by-serverID">Server ID</label>
-            </div>
-
-            <div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="by-name" name="pickBy" value="by-name" checked={this.state.pickBy === "by-name"} onClick={() => this.changePickBy("by-name")} />
-              <label class="form-check-label" for="by-name">Name</label>
-            </div>
-          </div> <br />
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class={`btn ${this.state.pickBy === "by-clientID" ? "btn-primary" : "btn-secondary"}`} onClick={() => this.changePickBy("by-clientID")}>Client ID</button>
+            <button type="button" class={`btn ${this.state.pickBy === "by-serverID" ? "btn-primary" : "btn-secondary"}`} onClick={() => this.changePickBy("by-serverID")}>Server ID</button>
+            <button type="button" class={`btn ${this.state.pickBy === "by-name" ? "btn-primary" : "btn-secondary"}`} onClick={() => this.changePickBy("by-name")}>Name</button>
+          </div>
+          <br /> <br/>
 
           { this.state.pickBy === "by-clientID" &&
             <select value={this.props.race} className="custom-select cusom-select-lg mb-3" onChange={this.props.changeRace}>
